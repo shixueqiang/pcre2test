@@ -17,7 +17,7 @@ add_library( # Specifies the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             src/main/cpp/phone_util.cpp )
+             src/main/cpp/phone_util.cpp)
 include_directories(src/main/cpp/pcre/${ANDROID_ABI}/include/)
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -42,7 +42,7 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                        # Provides the path to the library you want to import.
-                       src/main/jniLibs/${ANDROID_ABI}/libpcre2.so )
+                       ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libpcre2.so )
 add_library( pcrecpp
              SHARED
              IMPORTED )
@@ -53,8 +53,6 @@ set_target_properties( # Specifies the target library.
                        PROPERTIES IMPORTED_LOCATION
 
                        # Provides the path to the library you want to import.
-                       src/main/jniLibs/${ANDROID_ABI}/libpcrecpp.so )
+                       ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libpcrecpp.so )
 
 target_link_libraries( phone_util pcre2 pcrecpp ${log-lib} )
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
