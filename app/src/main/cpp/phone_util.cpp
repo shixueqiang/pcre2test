@@ -5,6 +5,10 @@
 #include <string>
 #include "phone_util.h"
 #include "pcre/include/pcrecpp.h"
+#include "gperf/include/gperf.h"
+#include "gmath/include/gmath.h"
+#include <cstring>
+#include <cinttypes>
 #include <android/log.h>
 #define LOG_TAG "PhoneUtilJNI"
 #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
@@ -14,8 +18,21 @@ char* jstringToChar(JNIEnv* env, jstring jstr);
 
 JNIEXPORT jstring Java_com_shixq_www_pcre2test_PhoneUtil_stringFromJNI
         (JNIEnv *env, jclass thiz) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    // Just for simplicity, we do this right away; correct way would do it in
+    // another thread...
+    auto ticks = GetTicks();
+
+    for (auto exp = 0; exp < 32; ++exp) {
+        volatile unsigned val = gpower(exp);
+        (void) val;  // to silence compiler warning
+    }
+    ticks = GetTicks() - ticks;
+
+    LOGE("calculation time: %" PRIu64, ticks);
+
+    return env->NewStringUTF("Hello from JNI LIBS!");
+//    std::string hello = "Hello from C++";
+//    return env->NewStringUTF(hello.c_str());
 }
 
 JNIEXPORT jboolean Java_com_shixq_www_pcre2test_PhoneUtil_isPhoneMatch
@@ -23,10 +40,11 @@ JNIEXPORT jboolean Java_com_shixq_www_pcre2test_PhoneUtil_isPhoneMatch
     const char* _phone = jstringToChar(env, phone);
     const char* _regex = jstringToChar(env, regex);
     LOGE("phone is %s,regex is %s", _phone, _regex);
-    pcrecpp::UTF();
-    pcrecpp::RE re(_regex);
-    bool isMatch = re.FullMatch(_phone);
-    return true;
+    pcrecpp::RE_Options options;
+    options.set_utf(true);
+    pcrecpp::RE re("word");
+    bool isMatch = re.FullMatch("hello");
+    return options.caseless();
 }
 
 JNIEXPORT jstring Java_com_shixq_www_pcre2test_PhoneUtil_getPhonePrefix
