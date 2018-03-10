@@ -26,13 +26,12 @@ android {
                 // Sets a flag to enable format macro constants for the C++ compiler.
                 cppFlags "-D__STDC_FORMAT_MACROS"
 
-                cppFlags "-std=c++11","-frtti", "-fexceptions"
+                cppFlags "-std=c++11"
 
                 cppFlags "-Wl,--hash-style=sysv"
             }
         }
         ndk {
-            stl = 'gnustl_static'
             // Specifies the ABI configurations of your native
             // libraries Gradle should build and package with your APK.
             abiFilters 'armeabi-v7a', 'arm64-v8a'
@@ -46,7 +45,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            path 'CMakeLists.txt'
+            path 'src/main/cpp/CMakeLists.txt'
         }
     }
 }

@@ -5,10 +5,12 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 # configure import libs
-set(distribution_DIR ${CMAKE_SOURCE_DIR}/src/main/cpp)
+set(distribution_DIR ${CMAKE_SOURCE_DIR})
 
 # build application's shared lib
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+
+ADD_SUBDIRECTORY(pcre)
 
 # Specifies a library name, specifies whether the library is STATIC or
 # SHARED, and provides relative paths to the source code. You can
@@ -23,9 +25,10 @@ add_library( # Specifies the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             src/main/cpp/phone_util.cpp)
+             ${distribution_DIR}/phone_util.cpp)
 target_include_directories(phone_util PRIVATE
-                            ${distribution_DIR}/pcre/include)
+                            ${distribution_DIR}/pcre/include
+                            ${distribution_DIR}/pcre/pcrecpp/include)
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because system libraries are included in the search path by
 # default, you only need to specify the name of the public NDK library
@@ -37,29 +40,6 @@ find_library( # Sets the name of the path variable.
               # Specifies the name of the NDK library that
               # you want CMake to locate.
               log )
-
-add_library( pcre2
-             SHARED
-             IMPORTED )
-set_target_properties( # Specifies the target library.
-                       pcre2
-
-                       # Specifies the parameter you want to define.
-                       PROPERTIES IMPORTED_LOCATION
-
-                       # Provides the path to the library you want to import.
-                       ${distribution_DIR}/pcre/lib/${ANDROID_ABI}/libpcre2.so )
-add_library( pcrecpp
-             SHARED
-             IMPORTED )
-set_target_properties( # Specifies the target library.
-                       pcrecpp
-
-                       # Specifies the parameter you want to define.
-                       PROPERTIES IMPORTED_LOCATION
-
-                       # Provides the path to the library you want to import.
-                       ${distribution_DIR}/pcre/lib/${ANDROID_ABI}/libpcrecpp.so )
 
 add_library(lib_gmath STATIC IMPORTED)
 set_target_properties(lib_gmath PROPERTIES IMPORTED_LOCATION
@@ -73,4 +53,4 @@ add_library(lib_gperf SHARED IMPORTED)
 set_target_properties(lib_gperf PROPERTIES IMPORTED_LOCATION
     ${distribution_DIR}/gperf/lib/${ANDROID_ABI}/libgperf.so)
 
-target_link_libraries( phone_util pcre2 pcrecpp lib_gmath lib_gperf ${log-lib} )
+target_link_libraries( phone_util pcre2cpp lib_gmath lib_gperf ${log-lib} )

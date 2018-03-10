@@ -17,6 +17,14 @@ JNIEXPORT jstring JNICALL Java_com_shixq_www_pcre2test_PhoneUtil_stringFromJNI
 
 /*
  * Class:     com_shixq_www_pcre2test_PhoneUtil
+ * Method:    isPhoneMatch
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_shixq_www_pcre2test_PhoneUtil_isPhoneMatch
+        (JNIEnv *, jclass, jstring, jstring);
+
+/*
+ * Class:     com_shixq_www_pcre2test_PhoneUtil
  * Method:    getPhonePrefix
  * Signature: (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  */
@@ -33,11 +41,4 @@ JNIEXPORT jstring JNICALL Java_com_shixq_www_pcre2test_PhoneUtil_getMinPhone
 #ifdef __cplusplus
 }
 #endif
-/*
- * Class:     com_shixq_www_pcre2test_PhoneUtil
- * Method:    isPhoneMatch
- * Signature: (Ljava/lang/String;Ljava/lang/String;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_shixq_www_pcre2test_PhoneUtil_isPhoneMatch
-        (JNIEnv *, jclass, jstring, jstring);
 #endif

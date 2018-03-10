@@ -4,7 +4,7 @@
 #include <jni.h>
 #include <string>
 #include "phone_util.h"
-#include "pcre/include/pcrecpp.h"
+#include "pcre/pcrecpp/include/pcrecpp.h"
 #include "gperf/include/gperf.h"
 #include "gmath/include/gmath.h"
 #include <cstring>
@@ -40,11 +40,9 @@ JNIEXPORT jboolean Java_com_shixq_www_pcre2test_PhoneUtil_isPhoneMatch
     const char* _phone = jstringToChar(env, phone);
     const char* _regex = jstringToChar(env, regex);
     LOGE("phone is %s,regex is %s", _phone, _regex);
-    pcrecpp::RE_Options options;
-    options.set_utf(true);
-    pcrecpp::RE re("word");
-    bool isMatch = re.FullMatch("hello");
-    return options.caseless();
+    pcrecpp::RE re(_regex);
+    bool isMatch = re.FullMatch(_phone);
+    return isMatch;
 }
 
 JNIEXPORT jstring Java_com_shixq_www_pcre2test_PhoneUtil_getPhonePrefix

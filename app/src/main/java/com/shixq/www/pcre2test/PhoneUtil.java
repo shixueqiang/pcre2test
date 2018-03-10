@@ -8,8 +8,7 @@ public class PhoneUtil {
     public static String PHONE_REGEX = "^(86|\\+86|0086|852|\\+852|00852|125831|125832|125833)(\\d+)$";
 
     static {
-        System.loadLibrary("pcre2");
-        System.loadLibrary("pcrecpp");
+        System.loadLibrary("pcre2cpp");
         System.loadLibrary("phone_util");
     }
 
