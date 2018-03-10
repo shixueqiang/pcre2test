@@ -22,4 +22,4 @@ target_include_directories(pcre2cpp PRIVATE
 add_library(pcre2 STATIC IMPORTED)
 set_target_properties(pcre2 PROPERTIES IMPORTED_LOCATION
     ${distribution_DIR}/lib/${ANDROID_ABI}/libpcre2.a)
-target_link_libraries( pcre2cpp pcre2 )
+target_link_libraries( pcre2cpp pcre2 ${log-lib})

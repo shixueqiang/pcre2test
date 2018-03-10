@@ -27,8 +27,6 @@ android {
                 cppFlags "-D__STDC_FORMAT_MACROS"
 
                 cppFlags "-std=c++11"
-
-                cppFlags "-Wl,--hash-style=sysv"
             }
         }
         ndk {
