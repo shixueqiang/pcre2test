@@ -5,7 +5,7 @@ package com.shixq.www.pcre2test;
  */
 
 public class PhoneUtil {
-    public static String PHONE_REGEX = "^(86|\\+86|0086|852|\\+852|00852|125831|125832|125833)(\\d+)$";
+    public static String PHONE_REGEX = "^(86|\\+86|0086|852|\\+852|00852|125831|125832|125833)?(\\d+)$";
 
     static {
         System.loadLibrary("pcre2cpp");

@@ -13,5 +13,7 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, PhoneUtil.stringFromJNI());
         Log.e(TAG, "" + PhoneUtil.isPhoneMatch("1358622a", PhoneUtil.PHONE_REGEX));
         Log.e(TAG, "" + PhoneUtil.isPhoneMatch("+86186285", PhoneUtil.PHONE_REGEX));
+        Log.e(TAG, "" + PhoneUtil.getPhonePrefix("186285", PhoneUtil.PHONE_REGEX));
+        Log.e(TAG, "" + PhoneUtil.getMinPhone("186285", PhoneUtil.PHONE_REGEX));
     }
 }

@@ -37,8 +37,8 @@ JNIEXPORT jstring Java_com_shixq_www_pcre2test_PhoneUtil_stringFromJNI
 
 JNIEXPORT jboolean Java_com_shixq_www_pcre2test_PhoneUtil_isPhoneMatch
         (JNIEnv *env, jclass thiz, jstring phone, jstring regex) {
-    const char* _phone = jstringToChar(env, phone);
-    const char* _regex = jstringToChar(env, regex);
+    char* _phone = jstringToChar(env, phone);
+    char* _regex = jstringToChar(env, regex);
     LOGE("phone is %s,regex is %s", _phone, _regex);
     pcrecpp::RE re(_regex);
     bool isMatch = re.FullMatch(_phone);
@@ -47,27 +47,26 @@ JNIEXPORT jboolean Java_com_shixq_www_pcre2test_PhoneUtil_isPhoneMatch
 
 JNIEXPORT jstring Java_com_shixq_www_pcre2test_PhoneUtil_getPhonePrefix
         (JNIEnv *env, jclass thiz, jstring phone, jstring regex) {
-
+    char* _phone = jstringToChar(env, phone);
+    char* _regex = jstringToChar(env, regex);
+    pcrecpp::RE re(_regex);
+    string prefix;
+    string minPhone;
+    re.FullMatch(_phone, &prefix, &minPhone);
+    LOGE("phone prefix is %s", prefix.c_str());
+    return env->NewStringUTF(prefix.c_str());
 }
 
 JNIEXPORT jstring Java_com_shixq_www_pcre2test_PhoneUtil_getMinPhone
         (JNIEnv *env, jclass thiz, jstring phone, jstring regex) {
-
-}
-
-jstring charTojstring(JNIEnv* env, const char* pat) {
-    //定义java String类 strClass
-    jclass strClass = (env)->FindClass("Ljava/lang/String;");
-    //获取String(byte[],String)的构造器,用于将本地byte[]数组转换为一个新String
-    jmethodID ctorID = (env)->GetMethodID(strClass, "<init>", "([BLjava/lang/String;)V");
-    //建立byte数组
-    jbyteArray bytes = (env)->NewByteArray(strlen(pat));
-    //将char* 转换为byte数组
-    (env)->SetByteArrayRegion(bytes, 0, strlen(pat), (jbyte*) pat);
-    // 设置String, 保存语言类型,用于byte数组转换至String时的参数
-    jstring encoding = (env)->NewStringUTF("GB2312");
-    //将byte数组转换为java String,并输出
-    return (jstring) (env)->NewObject(strClass, ctorID, bytes, encoding);
+    char* _phone = jstringToChar(env, phone);
+    char* _regex = jstringToChar(env, regex);
+    pcrecpp::RE re(_regex);
+    string prefix;
+    string minPhone;
+    re.FullMatch(_phone, &prefix, &minPhone);
+    LOGE("phone un prefix is %s", minPhone.c_str());
+    return env->NewStringUTF(minPhone.c_str());
 }
 
 char* jstringToChar(JNIEnv* env, jstring jstr) {
