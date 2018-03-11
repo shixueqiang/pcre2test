@@ -75,4 +75,5 @@ LOCAL_SRC_FILES := $(libpcrecpp_src_files)
 #LOCAL_SHARED_LIBRARIES := libpcre2
 LOCAL_STATIC_LIBRARIES := libpcre2
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
+LOCAL_LDLIBS :=  -llog -latomic
 include $(BUILD_SHARED_LIBRARY)
