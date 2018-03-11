@@ -18,7 +18,7 @@ android {
             cmake {
 
                 // Passes optional arguments to CMake.
-                arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_TOOLCHAIN=clang", '-DANDROID_STL=gnustl_static'
+                arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_TOOLCHAIN=clang", '-DANDROID_STL=gnustl_shared'
 
                 // Sets optional flags for the C compiler.
                 cFlags "-D_EXAMPLE_C_FLAG1", "-D_EXAMPLE_C_FLAG2"
